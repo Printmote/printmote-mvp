@@ -13,7 +13,7 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://printmote.com'),
+  metadataBase: new URL('https://www.printmote.com'),
   title: 'Printmote - Print in Accra without leaving your Desk',
   description: 'Business cards, banners, packaging, brand merch and more printed remotely and delivered across Accra.',
   icons: {
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     description: 'Business cards, banners, packaging, brand merch and more printed remotely and delivered across Accra.',
     siteName: 'Printmote',
     images: [{
-      url: '/Assets/Featured-image.jpg',
+      url: 'https://www.printmote.com/Assets/Featured-image.jpg',
       width: 1200,
       height: 630,
       alt: 'Printmote - Print in Accra without leaving your Desk'
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Printmote - Print in Accra without leaving your Desk',
     description: 'Business cards, banners, packaging, brand merch and more printed remotely and delivered across Accra.',
-    images: ['/Assets/Featured-image.jpg'],
+    images: ['https://www.printmote.com/Assets/Featured-image.jpg'],
     creator: '@printmote'
   }
 }
