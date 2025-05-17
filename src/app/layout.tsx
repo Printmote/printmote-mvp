@@ -9,6 +9,27 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Printmote - Print in Accra without leaving your Desk',
   description: 'Business cards, banners, packaging, brand merch and more printed remotely and delivered across Accra.',
+  icons: {
+    icon: [{ url: '/Assets/favicon.svg' }],
+  },
+  openGraph: {
+    title: 'Printmote - Print in Accra without leaving your Desk',
+    description: 'Business cards, banners, packaging, brand merch and more printed remotely and delivered across Accra.',
+    images: [
+      {
+        url: '/Assets/Featured-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Printmote - Print in Accra without leaving your Desk',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Printmote - Print in Accra without leaving your Desk',
+    description: 'Business cards, banners, packaging, brand merch and more printed remotely and delivered across Accra.',
+    images: ['/Assets/Featured-image.jpg'],
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -16,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={inter.className}>
         <div className="w-full bg-[#050038] text-white px-4 py-5 sm:py-6 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-          <span className="text-base sm:text-lg text-center">Printmote is more than just a business, we are on a mission...</span>
+          <span className="text-base sm:text-lg text-center">Printmote is more than just a business,<br className="block sm:hidden" /> we are on a mission...</span>
           <Link
             href="/about"
             className="whitespace-nowrap inline-block bg-white text-[#050038] text-sm sm:text-base font-medium px-6 py-2.5 rounded-lg hover:bg-gray-100 transition"
