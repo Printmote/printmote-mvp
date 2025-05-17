@@ -19,7 +19,7 @@ export default function Home() {
     <main className="min-h-screen flex flex-col items-center justify-center px-4 text-center bg-white relative overflow-hidden">
       {/* Emojis - Floating/animated */}
       <motion.div
-        className="absolute top-24 md:top-52 left-8 md:left-24 lg:left-52 w-16 md:w-20 lg:w-24 h-16 md:h-20 lg:h-24 cursor-pointer"
+        className="absolute top-16 md:top-52 left-8 md:left-24 lg:left-52 w-16 md:w-20 lg:w-24 h-16 md:h-20 lg:h-24 cursor-pointer"
         animate={{ 
           y: [0, -10, 0],
           rotate: [-5, 5, -5]
@@ -36,7 +36,7 @@ export default function Home() {
         <Image src="/Assets/emoji-bag.png" alt="Bag" width={96} height={96} priority className="w-full h-full" />
       </motion.div>
       <motion.div
-        className="absolute top-24 md:top-52 right-8 md:right-24 lg:right-52 w-16 md:w-20 lg:w-24 h-16 md:h-20 lg:h-24 cursor-pointer"
+        className="absolute top-16 md:top-52 right-8 md:right-24 lg:right-52 w-16 md:w-20 lg:w-24 h-16 md:h-20 lg:h-24 cursor-pointer"
         animate={{ 
           y: [0, -10, 0],
           rotate: [5, -5, 5]
@@ -53,7 +53,7 @@ export default function Home() {
         <Image src="/Assets/emoji-shirt.png" alt="Shirt" width={96} height={96} priority className="w-full h-full" />
       </motion.div>
       <motion.div
-        className="absolute bottom-24 md:bottom-52 left-8 md:left-24 lg:left-52 w-16 md:w-20 lg:w-24 h-16 md:h-20 lg:h-24 cursor-pointer"
+        className="absolute bottom-16 md:bottom-52 left-8 md:left-24 lg:left-52 w-16 md:w-20 lg:w-24 h-16 md:h-20 lg:h-24 cursor-pointer"
         animate={{ 
           y: [0, -10, 0],
           rotate: [-5, 5, -5]
@@ -70,7 +70,7 @@ export default function Home() {
         <Image src="/Assets/emoji-document.png" alt="Doc" width={96} height={96} priority className="w-full h-full" />
       </motion.div>
       <motion.div
-        className="absolute bottom-24 md:bottom-52 right-8 md:right-24 lg:right-52 w-16 md:w-20 lg:w-24 h-16 md:h-20 lg:h-24 cursor-pointer"
+        className="absolute bottom-16 md:bottom-52 right-8 md:right-24 lg:right-52 w-16 md:w-20 lg:w-24 h-16 md:h-20 lg:h-24 cursor-pointer"
         animate={{ 
           y: [0, -10, 0],
           rotate: [5, -5, 5]
