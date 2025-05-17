@@ -1,12 +1,19 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Toaster } from 'react-hot-toast'
 
 const inter = Inter({ subsets: ['latin'] })
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1
+}
+
 export const metadata: Metadata = {
+  metadataBase: new URL('https://printmote.com'),
   title: 'Printmote - Print in Accra without leaving your Desk',
   description: 'Business cards, banners, packaging, brand merch and more printed remotely and delivered across Accra.',
   icons: {
@@ -23,7 +30,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://printmote.com/',
+    url: '/',
     title: 'Printmote - Print in Accra without leaving your Desk',
     description: 'Business cards, banners, packaging, brand merch and more printed remotely and delivered across Accra.',
     siteName: 'Printmote',
@@ -40,11 +47,6 @@ export const metadata: Metadata = {
     description: 'Business cards, banners, packaging, brand merch and more printed remotely and delivered across Accra.',
     images: ['/Assets/Featured-image.jpg'],
     creator: '@printmote'
-  },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1
   }
 }
 
