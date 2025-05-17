@@ -96,11 +96,11 @@ export default function Home() {
       </div>
 
       {/* Hero Text */}
-      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold leading-[1.1] text-[#05054E] mt-8 mb-6 px-4">
+      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[1.1] text-[#05054E] mt-8 mb-6 px-4">
         Print in Accra without <br className="hidden sm:block" /> leaving your Desk.
       </h1>
 
-      <p className="mt-6 text-lg sm:text-xl md:text-2xl text-gray-700 max-w-2xl px-4">
+      <p className="mt-6 text-lg sm:text-xl md:text-2xl text-gray-700 max-w-2xl px-4 font-medium">
         Business cards, banners, packaging, brand merch and more printed remotely and delivered across Accra.
       </p>
 
