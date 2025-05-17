@@ -1,67 +1,140 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { CloudUpload, MessageCircle } from "lucide-react";
-import Image from "next/image";
+'use client'
+
+import Image from 'next/image'
+import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { useState } from 'react'
+import CallbackModal from '@/components/CallbackModal'
 
 export default function Home() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleCallbackRequest = (phoneNumber: string) => {
+    // Here you would typically send this to your backend
+    console.log('Callback requested for:', phoneNumber);
+    setIsModalOpen(false);
+  };
+
   return (
-    <div className="relative bg-white min-h-screen overflow-hidden">
-      {/* Top Banner */}
-      <div className="bg-[#0B0C45] text-white text-sm px-4 py-2 flex justify-between items-center">
-        <span>Printmote is more than just a business, we are on a mission...</span>
-        <Button variant="outline" className="text-white border-white hover:bg-white hover:text-[#0B0C45]">
-          Learn why we launched Printmote
-        </Button>
-      </div>
+    <main className="min-h-screen flex flex-col items-center justify-center px-4 text-center bg-white relative overflow-hidden">
+      {/* Emojis - Floating/animated */}
+      <motion.div
+        className="absolute top-52 left-8 md:left-24 lg:left-52 w-16 md:w-20 lg:w-24 h-16 md:h-20 lg:h-24 cursor-pointer"
+        animate={{ 
+          y: [0, -10, 0],
+          rotate: [-5, 5, -5]
+        }}
+        whileTap={{ 
+          scale: 0.8,
+          transition: { type: "spring", stiffness: 400, damping: 10 }
+        }}
+        transition={{ repeat: Infinity, duration: 2 }}
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+      >
+        <Image src="/assets/emoji-bag.png" alt="Bag" width={96} height={96} priority className="w-full h-full" />
+      </motion.div>
+      <motion.div
+        className="absolute top-52 right-8 md:right-24 lg:right-52 w-16 md:w-20 lg:w-24 h-16 md:h-20 lg:h-24 cursor-pointer"
+        animate={{ 
+          y: [0, -10, 0],
+          rotate: [5, -5, 5]
+        }}
+        whileTap={{ 
+          scale: 0.8,
+          transition: { type: "spring", stiffness: 400, damping: 10 }
+        }}
+        transition={{ repeat: Infinity, duration: 2 }}
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+      >
+        <Image src="/assets/emoji-shirt.png" alt="Shirt" width={96} height={96} priority className="w-full h-full" />
+      </motion.div>
+      <motion.div
+        className="absolute bottom-52 left-8 md:left-24 lg:left-52 w-16 md:w-20 lg:w-24 h-16 md:h-20 lg:h-24 cursor-pointer"
+        animate={{ 
+          y: [0, -10, 0],
+          rotate: [-5, 5, -5]
+        }}
+        whileTap={{ 
+          scale: 0.8,
+          transition: { type: "spring", stiffness: 400, damping: 10 }
+        }}
+        transition={{ repeat: Infinity, duration: 2 }}
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+      >
+        <Image src="/assets/emoji-document.png" alt="Doc" width={96} height={96} priority className="w-full h-full" />
+      </motion.div>
+      <motion.div
+        className="absolute bottom-52 right-8 md:right-24 lg:right-52 w-16 md:w-20 lg:w-24 h-16 md:h-20 lg:h-24 cursor-pointer"
+        animate={{ 
+          y: [0, -10, 0],
+          rotate: [5, -5, 5]
+        }}
+        whileTap={{ 
+          scale: 0.8,
+          transition: { type: "spring", stiffness: 400, damping: 10 }
+        }}
+        transition={{ repeat: Infinity, duration: 2 }}
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+      >
+        <Image src="/assets/emoji-gift.png" alt="Gift" width={96} height={96} priority className="w-full h-full" />
+      </motion.div>
 
-      {/* Center Content */}
-      <main className="flex flex-col items-center justify-center text-center py-20 px-4 relative z-10">
-        {/* Logo */}
-        <div className="flex items-center justify-center space-x-3 mb-6">
-          <Image src="/logo-icon.svg" alt="Printmote Logo" width={40} height={40} />
-          <h1 className="text-3xl font-bold text-[#0B0C45]">Printmote</h1>
-          <span className="text-sm bg-[#0B0C45] text-white rounded px-2 py-0.5">BETA</span>
+      {/* Logo */}
+      <div className="mt-6 mb-4">
+        <div className="inline-flex items-center space-x-2 bg-gray-50 rounded-[75px] px-4 sm:px-6 py-4 shadow-sm border border-gray-100">
+          <Image src="/assets/logo.svg" alt="Printmote logo" width={200} height={73} priority className="w-[180px] sm:w-[250px] h-auto" />
+          <span className="text-xs bg-indigo-900 text-white px-2 py-0.5 rounded">BETA</span>
         </div>
-
-        {/* Headline */}
-        <h2 className="text-4xl sm:text-5xl font-extrabold text-[#0B0C45] max-w-3xl leading-tight">
-          Print in Accra without leaving your Desk.
-        </h2>
-
-        {/* Subheadline */}
-        <p className="text-gray-700 mt-4 max-w-md text-lg">
-          Business cards, banners, packaging, brand merch and more printed remotely and delivered across Accra.
-        </p>
-
-        {/* Call to Actions */}
-        <div className="mt-8 flex gap-4 flex-wrap justify-center">
-          <Button className="flex items-center gap-2 text-white bg-[#6A5AE0] hover:bg-[#5a4ad0]">
-            <CloudUpload size={18} /> Upload Request
-          </Button>
-          <Button variant="outline" className="flex items-center gap-2 border-[#6A5AE0] text-[#6A5AE0] hover:bg-[#f4f4ff]">
-            <MessageCircle size={18} /> WhatsApp Request
-          </Button>
-        </div>
-
-        {/* Footer */}
-        <footer className="mt-16 text-sm text-gray-400">
-          © 2025 Printmote Tech (CS101203948)
-        </footer>
-      </main>
-
-      {/* Floating Emojis */}
-      <div className="absolute top-20 left-5 animate-float">
-        <Image src="/emoji-bag.png" alt="bag emoji" width={50} height={50} />
       </div>
-      <div className="absolute top-28 right-5 animate-float-delay">
-        <Image src="/emoji-shirt.png" alt="shirt emoji" width={50} height={50} />
+
+      {/* Hero Text */}
+      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold leading-[1.1] text-[#05054E] mt-8 mb-6 px-4">
+        Print in Accra without <br className="hidden sm:block" /> leaving your Desk.
+      </h1>
+
+      <p className="mt-6 text-lg sm:text-xl md:text-2xl text-gray-700 max-w-2xl px-4">
+        Business cards, banners, packaging, brand merch and more printed remotely and delivered across Accra.
+      </p>
+
+      {/* CTA Buttons */}
+      <div className="mt-10 flex flex-col sm:flex-row items-center gap-5 px-4">
+        <Link
+          href="/upload"
+          className="w-full sm:w-auto bg-[#6150FF] text-white px-6 sm:px-10 py-4 sm:py-5 rounded-xl text-lg sm:text-xl font-medium shadow-lg hover:bg-[#6150FF]/90 transition inline-flex items-center justify-center gap-3"
+        >
+          <Image src="/assets/upload-icon.svg" alt="" width={24} height={24} className="w-6 sm:w-7 h-6 sm:h-7" />
+          Upload Request
+        </Link>
+        <Link
+          href="https://wa.me/233XXXXXXXXX"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full sm:w-auto border-2 border-[#6150FF] text-[#6150FF] px-6 sm:px-10 py-4 sm:py-5 rounded-xl text-lg sm:text-xl font-medium hover:bg-[#6150FF]/5 transition inline-flex items-center justify-center gap-3"
+        >
+          <Image src="/assets/whatsapp-icon.svg" alt="" width={24} height={24} className="w-6 sm:w-7 h-6 sm:h-7" />
+          WhatsApp Request
+        </Link>
       </div>
-      <div className="absolute bottom-20 left-10 animate-float-fast">
-        <Image src="/emoji-doc.png" alt="doc emoji" width={50} height={50} />
-      </div>
-      <div className="absolute bottom-20 right-10 animate-float">
-        <Image src="/emoji-gift.png" alt="gift emoji" width={50} height={50} />
-      </div>
-    </div>
-  );
+
+      {/* Footer */}
+      <footer className="mt-20 text-sm text-gray-400">
+        © 2025 Printmote Tech (CS101203948)
+      </footer>
+
+      {/* Callback Modal */}
+      <CallbackModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleCallbackRequest}
+      />
+    </main>
+  )
 }

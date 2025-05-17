@@ -13,17 +13,28 @@ module.exports = {
         foreground: 'var(--foreground)',
       },
       animation: {
-        'float': 'float 6s ease-in-out infinite',
-        'float-delay': 'float 6s ease-in-out 2s infinite',
-        'float-fast': 'float 4s ease-in-out infinite',
+        'float': 'float 3s ease-in-out infinite',
+        'float-delay': 'float 3s ease-in-out 1s infinite',
+        'float-fast': 'float 2s ease-in-out infinite',
       },
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-20px)' },
+          '50%': { transform: 'translateY(-10px)' },
         },
       },
     },
   },
   plugins: [],
-} 
+}
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}', // update for app directory structure
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
