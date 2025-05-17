@@ -33,7 +33,7 @@ export default function Home() {
           setIsModalOpen(true);
         }}
       >
-        <Image src="/assets/emoji-bag.png" alt="Bag" width={96} height={96} priority className="w-full h-full" />
+        <Image src="/Assets/emoji-bag.png" alt="Bag" width={96} height={96} priority className="w-full h-full" />
       </motion.div>
       <motion.div
         className="absolute top-52 right-8 md:right-24 lg:right-52 w-16 md:w-20 lg:w-24 h-16 md:h-20 lg:h-24 cursor-pointer"
@@ -50,7 +50,7 @@ export default function Home() {
           setIsModalOpen(true);
         }}
       >
-        <Image src="/assets/emoji-shirt.png" alt="Shirt" width={96} height={96} priority className="w-full h-full" />
+        <Image src="/Assets/emoji-shirt.png" alt="Shirt" width={96} height={96} priority className="w-full h-full" />
       </motion.div>
       <motion.div
         className="absolute bottom-52 left-8 md:left-24 lg:left-52 w-16 md:w-20 lg:w-24 h-16 md:h-20 lg:h-24 cursor-pointer"
@@ -67,7 +67,7 @@ export default function Home() {
           setIsModalOpen(true);
         }}
       >
-        <Image src="/assets/emoji-document.png" alt="Doc" width={96} height={96} priority className="w-full h-full" />
+        <Image src="/Assets/emoji-document.png" alt="Doc" width={96} height={96} priority className="w-full h-full" />
       </motion.div>
       <motion.div
         className="absolute bottom-52 right-8 md:right-24 lg:right-52 w-16 md:w-20 lg:w-24 h-16 md:h-20 lg:h-24 cursor-pointer"
@@ -84,13 +84,13 @@ export default function Home() {
           setIsModalOpen(true);
         }}
       >
-        <Image src="/assets/emoji-gift.png" alt="Gift" width={96} height={96} priority className="w-full h-full" />
+        <Image src="/Assets/emoji-gift.png" alt="Gift" width={96} height={96} priority className="w-full h-full" />
       </motion.div>
 
       {/* Logo */}
       <div className="mt-6 mb-4">
         <div className="inline-flex items-center space-x-2 bg-gray-50 rounded-[75px] px-4 sm:px-6 py-4 shadow-sm border border-gray-100">
-          <Image src="/assets/logo.svg" alt="Printmote logo" width={200} height={73} priority className="w-[180px] sm:w-[250px] h-auto" />
+          <Image src="/Assets/logo.svg" alt="Printmote logo" width={200} height={73} priority className="w-[180px] sm:w-[250px] h-auto" />
           <span className="text-xs bg-indigo-900 text-white px-2 py-0.5 rounded">BETA</span>
         </div>
       </div>
@@ -110,7 +110,7 @@ export default function Home() {
           href="/upload"
           className="w-full sm:w-auto bg-[#6150FF] text-white px-6 sm:px-10 py-4 sm:py-5 rounded-xl text-lg sm:text-xl font-medium shadow-lg hover:bg-[#6150FF]/90 transition inline-flex items-center justify-center gap-3"
         >
-          <Image src="/assets/upload-icon.svg" alt="" width={24} height={24} className="w-6 sm:w-7 h-6 sm:h-7" />
+          <Image src="/Assets/upload-icon.svg" alt="" width={24} height={24} className="w-6 sm:w-7 h-6 sm:h-7" />
           Upload Request
         </Link>
         <Link
@@ -119,7 +119,7 @@ export default function Home() {
           rel="noopener noreferrer"
           className="w-full sm:w-auto border-2 border-[#6150FF] text-[#6150FF] px-6 sm:px-10 py-4 sm:py-5 rounded-xl text-lg sm:text-xl font-medium hover:bg-[#6150FF]/5 transition inline-flex items-center justify-center gap-3"
         >
-          <Image src="/assets/whatsapp-icon.svg" alt="" width={24} height={24} className="w-6 sm:w-7 h-6 sm:h-7" />
+          <Image src="/Assets/whatsapp-icon.svg" alt="" width={24} height={24} className="w-6 sm:w-7 h-6 sm:h-7" />
           WhatsApp Request
         </Link>
       </div>
