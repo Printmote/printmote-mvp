@@ -1,46 +1,67 @@
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { CloudUpload, MessageCircle } from "lucide-react";
+import Image from "next/image";
+
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col gap-16 px-6 py-12 font-sans">
-      {/* Hero Section */}
-      <section className="text-center space-y-4">
-        <h1 className="text-4xl font-bold text-gray-900">Welcome to Printmote</h1>
-        <p className="text-lg text-gray-600 max-w-xl mx-auto">
-          Remote-first printing service for busy professionals and SMEs in Ghana. Order posters, flyers, business cards, and more — all online.
+    <div className="relative bg-white min-h-screen overflow-hidden">
+      {/* Top Banner */}
+      <div className="bg-[#0B0C45] text-white text-sm px-4 py-2 flex justify-between items-center">
+        <span>Printmote is more than just a business, we are on a mission...</span>
+        <Button variant="outline" className="text-white border-white hover:bg-white hover:text-[#0B0C45]">
+          Learn why we launched Printmote
+        </Button>
+      </div>
+
+      {/* Center Content */}
+      <main className="flex flex-col items-center justify-center text-center py-20 px-4 relative z-10">
+        {/* Logo */}
+        <div className="flex items-center justify-center space-x-3 mb-6">
+          <Image src="/logo-icon.svg" alt="Printmote Logo" width={40} height={40} />
+          <h1 className="text-3xl font-bold text-[#0B0C45]">Printmote</h1>
+          <span className="text-sm bg-[#0B0C45] text-white rounded px-2 py-0.5">BETA</span>
+        </div>
+
+        {/* Headline */}
+        <h2 className="text-4xl sm:text-5xl font-extrabold text-[#0B0C45] max-w-3xl leading-tight">
+          Print in Accra without leaving your Desk.
+        </h2>
+
+        {/* Subheadline */}
+        <p className="text-gray-700 mt-4 max-w-md text-lg">
+          Business cards, banners, packaging, brand merch and more printed remotely and delivered across Accra.
         </p>
-        <a
-          href="#contact"
-          className="inline-block mt-4 bg-green-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-green-700 transition"
-        >
-          Place Your Order
-        </a>
-      </section>
 
-      {/* Services Section */}
-      <section id="services" className="space-y-8">
-        <h2 className="text-2xl font-semibold text-center">Our Services</h2>
-        <ul className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 text-gray-700">
-          <li className="border p-4 rounded shadow-sm hover:shadow-md">Posters</li>
-          <li className="border p-4 rounded shadow-sm hover:shadow-md">Banners</li>
-          <li className="border p-4 rounded shadow-sm hover:shadow-md">Flyers</li>
-          <li className="border p-4 rounded shadow-sm hover:shadow-md">Business Cards</li>
-          <li className="border p-4 rounded shadow-sm hover:shadow-md">Packaging Materials</li>
-          <li className="border p-4 rounded shadow-sm hover:shadow-md">Branded Souvenirs (Coming Soon)</li>
-        </ul>
-      </section>
+        {/* Call to Actions */}
+        <div className="mt-8 flex gap-4 flex-wrap justify-center">
+          <Button className="flex items-center gap-2 text-white bg-[#6A5AE0] hover:bg-[#5a4ad0]">
+            <CloudUpload size={18} /> Upload Request
+          </Button>
+          <Button variant="outline" className="flex items-center gap-2 border-[#6A5AE0] text-[#6A5AE0] hover:bg-[#f4f4ff]">
+            <MessageCircle size={18} /> WhatsApp Request
+          </Button>
+        </div>
 
-      {/* Contact Section */}
-      <section id="contact" className="bg-gray-100 px-6 py-12 text-center rounded">
-        <h2 className="text-2xl font-semibold mb-4">Get in Touch</h2>
-        <p>Message us on WhatsApp or send us an email to place your order.</p>
-        <a
-          href="https://wa.me/233XXXXXXXXX" // Replace with your actual WhatsApp number
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block mt-4 bg-green-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-green-700 transition"
-        >
-          WhatsApp Us
-        </a>
-      </section>
+        {/* Footer */}
+        <footer className="mt-16 text-sm text-gray-400">
+          © 2025 Printmote Tech (CS101203948)
+        </footer>
+      </main>
+
+      {/* Floating Emojis */}
+      <div className="absolute top-20 left-5 animate-float">
+        <Image src="/emoji-bag.png" alt="bag emoji" width={50} height={50} />
+      </div>
+      <div className="absolute top-28 right-5 animate-float-delay">
+        <Image src="/emoji-shirt.png" alt="shirt emoji" width={50} height={50} />
+      </div>
+      <div className="absolute bottom-20 left-10 animate-float-fast">
+        <Image src="/emoji-doc.png" alt="doc emoji" width={50} height={50} />
+      </div>
+      <div className="absolute bottom-20 right-10 animate-float">
+        <Image src="/emoji-gift.png" alt="gift emoji" width={50} height={50} />
+      </div>
     </div>
   );
 }
