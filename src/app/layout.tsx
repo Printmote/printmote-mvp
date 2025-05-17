@@ -1,10 +1,7 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
 import Link from 'next/link'
 import type { Metadata, Viewport } from 'next'
 import { Toaster } from 'react-hot-toast'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -58,7 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="alternate icon" href="/Assets/favicon.svg" />
         <link rel="mask-icon" href="/Assets/favicon.svg" color="#6150FF" />
       </head>
-      <body className={inter.className}>
+      <body>
         <div className="w-full bg-[#050038] text-white px-4 py-5 sm:py-6 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
           <span className="text-base sm:text-lg text-center">Printmote is more than just a business,<br className="block sm:hidden" /> we are on a mission...</span>
           <Link
