@@ -1,0 +1,17 @@
+{
+  "name": "Printmote",
+  "short_name": "Printmote",
+  "description": "Print in Accra without leaving your Desk",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6150FF",
+  "icons": [
+    {
+      "src": "/Assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+} 

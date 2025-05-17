@@ -10,31 +10,52 @@ export const metadata: Metadata = {
   title: 'Printmote - Print in Accra without leaving your Desk',
   description: 'Business cards, banners, packaging, brand merch and more printed remotely and delivered across Accra.',
   icons: {
-    icon: [{ url: '/Assets/favicon.svg' }],
+    icon: '/Assets/favicon.svg',
+    shortcut: '/Assets/favicon.svg',
+    apple: '/Assets/favicon.svg',
+    other: {
+      rel: 'mask-icon',
+      url: '/Assets/favicon.svg',
+      color: '#6150FF'
+    }
   },
+  manifest: '/manifest.json',
   openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://printmote.com/',
     title: 'Printmote - Print in Accra without leaving your Desk',
     description: 'Business cards, banners, packaging, brand merch and more printed remotely and delivered across Accra.',
-    images: [
-      {
-        url: '/Assets/Featured-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Printmote - Print in Accra without leaving your Desk',
-      },
-    ],
+    siteName: 'Printmote',
+    images: [{
+      url: '/Assets/Featured-image.jpg',
+      width: 1200,
+      height: 630,
+      alt: 'Printmote - Print in Accra without leaving your Desk'
+    }]
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Printmote - Print in Accra without leaving your Desk',
     description: 'Business cards, banners, packaging, brand merch and more printed remotely and delivered across Accra.',
     images: ['/Assets/Featured-image.jpg'],
+    creator: '@printmote'
   },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1
+  }
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" type="image/svg+xml" href="/Assets/favicon.svg" />
+        <link rel="alternate icon" href="/Assets/favicon.svg" />
+        <link rel="mask-icon" href="/Assets/favicon.svg" color="#6150FF" />
+      </head>
       <body className={inter.className}>
         <div className="w-full bg-[#050038] text-white px-4 py-5 sm:py-6 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
           <span className="text-base sm:text-lg text-center">Printmote is more than just a business,<br className="block sm:hidden" /> we are on a mission...</span>
