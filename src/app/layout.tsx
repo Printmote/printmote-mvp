@@ -2,6 +2,8 @@ import './globals.css'
 import Link from 'next/link'
 import type { Metadata, Viewport } from 'next'
 import { Toaster } from 'react-hot-toast'
+import { Analytics } from '@vercel/analytics/react';
+
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -80,6 +82,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             },
           }}
         />
+          <body>
+    {children}
+    <Analytics />
+  </body>
       </body>
     </html>
   )
