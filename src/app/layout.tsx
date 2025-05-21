@@ -1,10 +1,11 @@
+// DO NOT add "use client" here
+
 import './globals.css'
 import Link from 'next/link'
 import type { Metadata, Viewport } from 'next'
 import { Toaster } from 'react-hot-toast'
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from "@vercel/speed-insights/next"
-
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -59,16 +60,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="mask-icon" href="/Assets/favicon.svg" color="#6150FF" />
       </head>
       <body>
-        <div className="w-full bg-[#050038] text-white px-4 py-5 sm:py-6 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-          <span className="text-base sm:text-lg text-center">Printmote is more than just a business,<br className="block sm:hidden" /> we are on a mission...</span>
-          <Link
-            href="/about"
-            className="whitespace-nowrap inline-block bg-white text-[#050038] text-sm sm:text-base font-medium px-6 py-2.5 rounded-lg hover:bg-gray-100 transition"
-          >
-            Learn why we launched Printmote
-          </Link>
-        </div>
-
         {/* Page Content */}
         <main>{children}</main>
         <Toaster 
@@ -79,14 +70,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               background: '#6150FF',
               color: '#fff',
               borderRadius: '12px',
-              padding: '16px',
-            },
+            }
           }}
         />
-          <body>
-    {children}
-    <Analytics />
-  </body>
       </body>
     </html>
   )
