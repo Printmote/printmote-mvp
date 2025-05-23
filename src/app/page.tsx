@@ -22,11 +22,11 @@ export default function Home() {
     <>
       {/* Banner */}
       <div className="w-full bg-[#050038] text-white">
-        <div className="max-w-7xl mx-auto px-4 py-5 sm:py-6 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+        <div className="max-w-7xl mx-auto px-4 py-3 sm:py-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
           <span className="text-base sm:text-lg text-center">Printmote is more than just a business,<br className="block sm:hidden" /> we are on a mission...</span>
           <Link
             href="/about"
-            className="whitespace-nowrap inline-block bg-white text-[#050038] text-sm sm:text-base font-medium px-6 py-2.5 rounded-lg hover:bg-gray-100 transition"
+            className="whitespace-nowrap inline-block bg-white text-[#050038] text-sm sm:text-base font-medium px-6 py-2 rounded-lg hover:bg-gray-100 transition"
           >
             Learn why we launched Printmote
           </Link>

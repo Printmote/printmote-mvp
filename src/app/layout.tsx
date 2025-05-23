@@ -59,7 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="alternate icon" href="/Assets/favicon.svg" />
         <link rel="mask-icon" href="/Assets/favicon.svg" color="#6150FF" />
       </head>
-      <body>
+      <body className="bg-[#F5F5FF]">
         {/* Page Content */}
         <main>{children}</main>
         <Toaster 
@@ -73,6 +73,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }
           }}
         />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
