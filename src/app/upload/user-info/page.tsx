@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import PrintUploadForm from '@/components/PrintUploadForm'
+import UserInfoForm from '@/components/UserInfoForm'
 import ProgressSteps from '@/components/ProgressSteps'
 
 const UPLOAD_STEPS = [
@@ -24,25 +24,24 @@ const UPLOAD_STEPS = [
   }
 ]
 
-export default function UploadStart() {
+export default function UserInfoPage() {
   const router = useRouter()
 
   const handleSubmit = (data: {
-    printType: string
-    size: string
-    quantity: string
-    file?: File
-    notes?: string
+    fullName: string
+    email: string
+    phone: string
+    organization?: string
   }) => {
-    // Store the form data in localStorage for now
-    // In a real app, you'd probably use a proper state management solution
+    // Store the user data in localStorage
+    const printRequest = JSON.parse(localStorage.getItem('printRequest') || '{}')
     localStorage.setItem('printRequest', JSON.stringify({
-      ...data,
-      file: data.file?.name // We can't store the actual file in localStorage
+      ...printRequest,
+      userInfo: data
     }))
 
-    // Navigate to the next step (delivery details)
-    router.push('/upload/delivery')
+    // Navigate to the next step (payment)
+    router.push('/upload/payment')
   }
 
   return (
@@ -55,8 +54,8 @@ export default function UploadStart() {
         </div>
       </div>
 
-      <ProgressSteps currentStep={0} steps={UPLOAD_STEPS} />
-      <PrintUploadForm onSubmit={handleSubmit} />
+      <ProgressSteps currentStep={2} steps={UPLOAD_STEPS} />
+      <UserInfoForm onSubmit={handleSubmit} />
     </div>
   )
 } 

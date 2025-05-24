@@ -10,48 +10,48 @@ export async function middleware(request: NextRequest) {
   })
 
   try {
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          get(name: string) {
-            return request.cookies.get(name)?.value
-          },
-          set(name: string, value: string, options: CookieOptions) {
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return request.cookies.get(name)?.value
+        },
+        set(name: string, value: string, options: CookieOptions) {
             try {
-              response.cookies.set({
-                name,
-                value,
-                ...options,
+          response.cookies.set({
+            name,
+            value,
+            ...options,
                 // Ensure these are explicitly set
                 path: options.path ?? '/',
                 sameSite: options.sameSite ?? 'lax',
-              })
+          })
             } catch (error) {
               console.error('Error setting cookie:', error)
             }
-          },
-          remove(name: string, options: CookieOptions) {
+        },
+        remove(name: string, options: CookieOptions) {
             try {
-              response.cookies.set({
-                name,
-                value: '',
+          response.cookies.set({
+            name,
+            value: '',
                 path: options.path ?? '/',
                 expires: new Date(0),
-              })
+          })
             } catch (error) {
               console.error('Error removing cookie:', error)
             }
-          },
         },
-      }
-    )
+      },
+    }
+  )
 
     // Refresh the auth session
     const { data: { session } } = await supabase.auth.getSession()
-    
-    return response
+
+  return response
 
   } catch (error) {
     console.error('Middleware error:', error)
