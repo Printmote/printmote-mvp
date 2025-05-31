@@ -11,7 +11,8 @@ export default function UploadIntro() {
   useEffect(() => {
     // Redirect to the main upload flow after 6 seconds (doubled from 3)
     const timer = setTimeout(() => {
-      router.push('/upload/start')
+      // router.push('/upload/start')
+      router.push('/upload/form')
     }, 5000)
 
     return () => clearTimeout(timer)

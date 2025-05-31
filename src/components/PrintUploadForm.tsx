@@ -122,13 +122,13 @@ export default function PrintUploadForm({ onSubmit }: PrintUploadFormProps) {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Print Type */}
           <div className="relative">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium mb-2 text-gray-800">
               Type of printing<span className="text-red-500">*</span>
             </label>
             <div className="relative">
               <button
                 type="button"
-                className="w-full px-4 py-3 text-left bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6150FF] focus:border-transparent text-gray-500 focus:text-[#05054E]"
+                className="w-full px-4 py-3 text-left bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6150FF] focus:border-transparent text-[#151515] focus:text-[#05054E]"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
                 {printType || 'Select print type'}
@@ -144,7 +144,7 @@ export default function PrintUploadForm({ onSubmit }: PrintUploadFormProps) {
                     <button
                       key={type}
                       type="button"
-                      className="w-full px-4 py-3 text-left hover:bg-gray-50 focus:outline-none focus:bg-gray-50"
+                      className="w-full px-4 py-3 text-left text-[#151515] hover:bg-gray-50 focus:outline-none focus:bg-gray-50"
                       onClick={() => {
                         setPrintType(type)
                         setIsDropdownOpen(false)
@@ -160,13 +160,13 @@ export default function PrintUploadForm({ onSubmit }: PrintUploadFormProps) {
 
           {/* Size */}
           <div className="relative">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium mb-2 text-gray-800">
               Size<span className="text-red-500">*</span>
             </label>
             <div className="relative">
               <button
                 type="button"
-                className="w-full px-4 py-3 text-left bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6150FF] focus:border-transparent text-gray-500 focus:text-[#05054E]"
+                className="w-full px-4 py-3 text-left bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6150FF] focus:border-transparent text-[#151515] focus:text-[#05054E]"
                 onClick={() => setIsSizeDropdownOpen(!isSizeDropdownOpen)}
               >
                 {size || 'Select size'}
@@ -182,7 +182,7 @@ export default function PrintUploadForm({ onSubmit }: PrintUploadFormProps) {
                     <button
                       key={option}
                       type="button"
-                      className="w-full px-4 py-3 text-left hover:bg-gray-50 focus:outline-none focus:bg-gray-50"
+                      className="w-full px-4 py-3 text-left text-[#151515] hover:bg-gray-50 focus:outline-none focus:bg-gray-50"
                       onClick={() => {
                         setSize(option)
                         setIsSizeDropdownOpen(false)
@@ -198,7 +198,7 @@ export default function PrintUploadForm({ onSubmit }: PrintUploadFormProps) {
 
           {/* Quantity */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium mb-2 text-gray-800">
               Quantity<span className="text-red-500">*</span>
             </label>
             <input
@@ -207,14 +207,14 @@ export default function PrintUploadForm({ onSubmit }: PrintUploadFormProps) {
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
               placeholder="Enter quantity"
-              className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6150FF] focus:border-transparent"
+              className="w-full px-4 py-3 bg-gray-50 text-[#151515] rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6150FF] focus:border-transparent"
               required
             />
           </div>
 
           {/* File Upload */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium mb-2 text-gray-800">
               Upload your file
             </label>
             <div 
@@ -250,7 +250,7 @@ export default function PrintUploadForm({ onSubmit }: PrintUploadFormProps) {
                   <p className="mt-1 text-sm text-gray-600">
                     Click to upload or drag and drop
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-[#151515]">
                     PDF, DOC, AI, PSD, JPG, PNG up to 10MB
                   </p>
                 </div>
@@ -260,7 +260,7 @@ export default function PrintUploadForm({ onSubmit }: PrintUploadFormProps) {
 
           {/* Notes */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium mb-2 text-gray-800">
               Additional notes <span className="text-gray-400">(Optional)</span>
             </label>
             <textarea
@@ -268,7 +268,7 @@ export default function PrintUploadForm({ onSubmit }: PrintUploadFormProps) {
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Any special instructions or requirements?"
               rows={4}
-              className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6150FF] focus:border-transparent"
+              className="w-full px-4 text-[#151515] py-3 bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6150FF] focus:border-transparent"
             />
           </div>
 

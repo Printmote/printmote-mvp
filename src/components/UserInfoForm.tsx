@@ -90,7 +90,7 @@ export default function UserInfoForm({ onSubmit }: UserInfoFormProps) {
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="Enter your full name"
-              className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6150FF] focus:border-transparent"
+              className="w-full text-gray-900 px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6150FF] focus:border-transparent"
               required
             />
           </div>
@@ -105,7 +105,7 @@ export default function UserInfoForm({ onSubmit }: UserInfoFormProps) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email address"
-              className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6150FF] focus:border-transparent"
+              className="w-full text-gray-900 px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6150FF] focus:border-transparent"
               required
             />
           </div>
@@ -120,7 +120,7 @@ export default function UserInfoForm({ onSubmit }: UserInfoFormProps) {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Enter your phone number"
-              className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6150FF] focus:border-transparent"
+              className="w-full text-gray-900 px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6150FF] focus:border-transparent"
               required
             />
           </div>
@@ -135,7 +135,7 @@ export default function UserInfoForm({ onSubmit }: UserInfoFormProps) {
               value={organization}
               onChange={(e) => setOrganization(e.target.value)}
               placeholder="Enter your organization name"
-              className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6150FF] focus:border-transparent"
+              className="w-full text-gray-900 px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6150FF] focus:border-transparent"
             />
           </div>
 

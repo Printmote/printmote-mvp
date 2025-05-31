@@ -1,111 +1,23 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import Image from 'next/image'
-
-interface PrintRequest {
-  printType: string
-  size: string
-  quantity: string
-  file?: string
-  notes?: string
-  delivery: {
-    deliveryType: string
-    deliveryDate?: string
-    deliveryLocation: string
-  }
-  userInfo: {
-    fullName: string
-    email: string
-    phone: string
-    organization?: string
-  }
-}
+import { supabase } from '@/lib/supabase/client'
+import { sendEmail } from '@/utils/emailService';
+import { useRouter } from 'next/navigation'
 
 interface PaymentFormProps {
-  onSubmit: (data: {
-    paymentMethod: string
-  }) => void
-}
-
-const FilePreview = ({ fileName }: { fileName: string }) => {
-  const fileExtension = fileName.split('.').pop()?.toLowerCase() || ''
-  const isImage = ['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension)
-  
-  if (isImage) {
-    return (
-      <div className="relative w-full h-40 bg-gray-100 rounded-lg overflow-hidden">
-        <Image
-          src={`/uploads/${fileName}`}
-          alt={fileName}
-          fill
-          className="object-contain"
-        />
-      </div>
-    )
-  }
-
-  // Icon mapping for different file types
-  const getFileIcon = () => {
-    switch (fileExtension) {
-      case 'pdf':
-        return (
-          <svg className="w-12 h-12 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-            <polyline points="14 2 14 8 20 8" />
-            <text x="8" y="18" fontSize="6" fill="currentColor">PDF</text>
-          </svg>
-        )
-      case 'doc':
-      case 'docx':
-        return (
-          <svg className="w-12 h-12 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-            <polyline points="14 2 14 8 20 8" />
-            <text x="8" y="18" fontSize="6" fill="currentColor">DOC</text>
-          </svg>
-        )
-      case 'ai':
-        return (
-          <svg className="w-12 h-12 text-orange-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-            <polyline points="14 2 14 8 20 8" />
-            <text x="9" y="18" fontSize="6" fill="currentColor">AI</text>
-          </svg>
-        )
-      case 'psd':
-        return (
-          <svg className="w-12 h-12 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-            <polyline points="14 2 14 8 20 8" />
-            <text x="7" y="18" fontSize="6" fill="currentColor">PSD</text>
-          </svg>
-        )
-      default:
-        return (
-          <svg className="w-12 h-12 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-            <polyline points="14 2 14 8 20 8" />
-          </svg>
-        )
-    }
-  }
-
-  return (
-    <div className="flex flex-col items-center justify-center p-4 bg-gray-50 rounded-lg">
-      {getFileIcon()}
-      <p className="mt-2 text-sm text-gray-600 truncate max-w-full">{fileName}</p>
-    </div>
-  )
+  onSubmit: (data: { paymentMethod: string }) => void
 }
 
 export default function PaymentForm({ onSubmit }: PaymentFormProps) {
   const [orderSummary, setOrderSummary] = useState<any>(null)
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  // Load saved data when component mounts
   useEffect(() => {
+    // Retrieve all data from localStorage
     const savedData = localStorage.getItem('printRequest')
     if (savedData) {
       const data = JSON.parse(savedData)
@@ -113,31 +25,91 @@ export default function PaymentForm({ onSubmit }: PaymentFormProps) {
     }
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Temporarily skip payment and proceed to success
-    onSubmit({ paymentMethod: 'pending' })
-  }
-
-  // Calculate total price
   const calculateTotal = () => {
     let total = 0
     if (orderSummary) {
-      // Add delivery price based on type
-      if (orderSummary.deliveryType === 'Within 24 hours') {
-        total += 35.00
-      } else if (orderSummary.deliveryType === 'Scheduled (Two or more days ahead)') {
-        total += 30.00
-      }
-      
-      // Add print job cost (this would typically come from an API)
-      // For now, we'll use a placeholder amount
-      total += 50.00
+      if (orderSummary.deliveryType === 'Within 24 hours') total += 35.0
+      else if (orderSummary.deliveryType === 'Scheduled (Two or more days ahead)') total += 30.0
+      total += 50.0 // static print cost
     }
     return total.toFixed(2)
   }
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!orderSummary) return;
+
+    setLoading(true);
+
+    // Combine all data into a single payload
+    const payload = {
+      size: orderSummary.size,
+      quantity: orderSummary.quantity,
+      file: orderSummary.file,
+      notes: orderSummary.notes,
+      deliveryType: orderSummary.deliveryType,
+      deliveryDate: orderSummary.deliveryDate,
+      deliveryLocation: orderSummary.deliveryLocation,
+      fullName: orderSummary.fullName,
+      customer_name: orderSummary.fullName,
+      email: orderSummary.email,
+      phone: orderSummary.phone,
+      organization: orderSummary.organization,
+      total: parseFloat(calculateTotal()),
+      status: 'pending',
+      created_at: new Date().toISOString(),
+    };
+
+    // Save to Supabase
+    const { error } = await supabase.from('print_requests').insert([payload]);
+
+    setLoading(false);
+
+    if (error) {
+      console.error('Error saving order:', error);
+      alert('Failed to place order. Please try again.' + error.message);
+      return;
+    }
+
+    // Send emails
+    try {
+      // Email to the user
+      const userEmailResult = await sendEmail({
+        to: orderSummary.email,
+        subject: 'Order Confirmation',
+        html: `<p>Hi ${orderSummary.fullName},</p><p>Your order has been successfully placed!</p><p>Order Details:</p><ul><li>Size: ${orderSummary.size}</li><li>Quantity: ${orderSummary.quantity}</li><li>Total: GHS ${calculateTotal()}</li></ul>`,
+      });
+
+      if (!userEmailResult.success) {
+        console.error('Failed to send email to user:', userEmailResult.error);
+      }
+
+      // Email to the business
+      const businessEmailResult = await sendEmail({
+        to: 'printmoteit@gmail.com',
+        subject: 'New Order Received',
+        html: `<p>A new order has been placed by ${orderSummary.fullName}.</p><p>Order Details:</p><ul><li>Size: ${orderSummary.size}</li><li>Quantity: ${orderSummary.quantity}</li><li>Total: GHS ${calculateTotal()}</li></ul>`,
+      });
+
+      if (!businessEmailResult.success) {
+        console.error('Failed to send email to business:', businessEmailResult.error);
+      }
+
+      console.log('Emails sent successfully');
+    } catch (emailError) {
+      console.error('Error sending emails:', emailError);
+    }
+
+    // Clear localStorage and notify parent component
+    localStorage.removeItem('printRequest');
+    onSubmit({ paymentMethod: 'pending' });
+
+    // Redirect to the success page
+    router.push('/upload/success');
+  }
+
   return (
+    
     <div className="w-full max-w-2xl mx-auto px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -160,6 +132,7 @@ export default function PaymentForm({ onSubmit }: PaymentFormProps) {
         </div>
 
         {/* Order Summary */}
+        <form onSubmit={handleSubmit} className="space-y-6">
         {orderSummary && (
           <div className="mb-8 bg-gray-50 rounded-xl p-6">
             <h2 className="text-lg font-medium text-[#05054E] mb-4">Order Summary</h2>
@@ -192,50 +165,83 @@ export default function PaymentForm({ onSubmit }: PaymentFormProps) {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Payment section commented out for now */}
-          {/* <div>
-            <label className="block text-sm font-medium text-gray-700 mb-4">
-              Select Payment Method
-            </label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <button
-                type="button"
-                onClick={() => setPaymentMethod('mobile-money')}
-                className={`p-4 border-2 rounded-xl flex items-center gap-3 hover:border-[#6150FF] transition ${
-                  paymentMethod === 'mobile-money' ? 'border-[#6150FF] bg-[#6150FF]/5' : 'border-gray-200'
-                }`}
-              >
-                <Image src="/Assets/mobile-money.svg" alt="Mobile Money" width={32} height={32} />
-                <span className="font-medium">Mobile Money</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setPaymentMethod('card')}
-                className={`p-4 border-2 rounded-xl flex items-center gap-3 hover:border-[#6150FF] transition ${
-                  paymentMethod === 'card' ? 'border-[#6150FF] bg-[#6150FF]/5' : 'border-gray-200'
-                }`}
-              >
-                <Image src="/Assets/card-payment.svg" alt="Card Payment" width={32} height={32} />
-                <span className="font-medium">Card Payment</span>
-              </button>
+          {/* Additional Inputs */}
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="notes" className="block text-sm font-medium text-gray-700">
+                Notes
+              </label>
+              <textarea
+                id="notes"
+                name="notes"
+                rows={3}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                defaultValue={orderSummary?.notes || ''}
+              />
             </div>
-          </div> */}
+            <div>
+              <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
+                Full Name
+              </label>
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                defaultValue={orderSummary?.fullName || ''}
+              />
+            </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                defaultValue={orderSummary?.email || ''}
+              />
+            </div>
+            <div>
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+                Phone
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                defaultValue={orderSummary?.phone || ''}
+              />
+            </div>
+            <div>
+              <label htmlFor="organization" className="block text-sm font-medium text-gray-700">
+                Organization
+              </label>
+              <input
+                type="text"
+                id="organization"
+                name="organization"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                defaultValue={orderSummary?.organization || ''}
+              />
+            </div>
+          </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-[#6150FF] text-white py-4 rounded-xl text-lg font-medium shadow-lg hover:bg-[#6150FF]/90 transition"
+            disabled={loading}
+            className="w-full bg-[#6150FF] text-white py-4 rounded-xl text-lg font-medium shadow-lg hover:bg-[#6150FF]/90 transition disabled:opacity-50"
           >
-            Place Order
+            {loading ? 'Placing Order...' : 'Place Order'}
           </button>
         </form>
       </motion.div>
-
-      {/* Footer */}
+      
       <footer className="mt-8 mb-6 text-center text-sm text-gray-400">
         © 2025 Printmote Tech (CS101203948)
       </footer>
     </div>
   )
-} 
+}
