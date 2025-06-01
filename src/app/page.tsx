@@ -153,7 +153,7 @@ export default function Home() {
               Upload Your Print Job
             </Link>
             <Link
-              href="https://wa.me/233XXXXXXXXX"
+              href="https://wa.me/233543982124"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto border-2 border-[#6150FF] text-[#6150FF] px-6 sm:px-10 py-4 sm:py-5 rounded-xl text-lg sm:text-xl font-medium hover:bg-[#6150FF]/5 transition inline-flex items-center justify-center gap-3"
