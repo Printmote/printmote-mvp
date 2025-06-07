@@ -14,7 +14,7 @@ const ReviewSubmitStep: React.FC<ReviewSubmitProps> = ({ formData }) => {
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   
   console.log (formData as Object);
-
+  
   const validateForm = () => {
     const errors: Record<string, string> = {};
     
@@ -34,6 +34,9 @@ const ReviewSubmitStep: React.FC<ReviewSubmitProps> = ({ formData }) => {
 };
 
  const handleSubmit = async () => {
+  setIsSubmitting(true);
+  setSubmitError(null);
+
   try {
     const response = await fetch('/api/submit-to-notion', {
       method: 'POST',
@@ -48,12 +51,27 @@ const ReviewSubmitStep: React.FC<ReviewSubmitProps> = ({ formData }) => {
       })
     });
 
-    if (!response.ok) throw new Error('Request failed');
-    
     const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Submission failed');
+    }
+
     setSubmitSuccess(true);
+    localStorage.removeItem("uploadForm");
+
+    // Optional: Show Notion URL
+    console.log('Notion page created:', data.notionUrl);
+
   } catch (error) {
-    setSubmitError('Submission failed. Please try again.');
+    console.error('Submission error:', error);
+    setSubmitError(
+      error instanceof Error ? 
+        error.message : 
+        'Failed to submit order. Please try again.'
+    );
+  } finally {
+    setIsSubmitting(false);
   }
 };
 
