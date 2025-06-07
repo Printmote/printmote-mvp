@@ -1,62 +1,111 @@
-'use client'
+"use client";
 
-import { useRouter } from 'next/navigation'
-import Image from 'next/image'
-import PrintUploadForm from '@/components/PrintUploadForm'
-import ProgressSteps from '@/components/ProgressSteps'
+import { useState, useEffect } from "react";
+import StepFormRenderer from "../form/multiStepForm";
+import ProgressIndicatorPill from "@/components/ui/ProgressIndicatorPill";
 
-const UPLOAD_STEPS = [
-  {
-    title: 'Print Details',
-    description: 'What would you like to print?'
-  },
-  {
-    title: 'Delivery',
-    description: 'Where should we deliver?'
-  },
-  {
-    title: 'Your Info',
-    description: 'Tell us about you'
-  },
-  {
-    title: 'Payment',
-    description: 'Review and pay'
-  }
-]
+const MultiStepForm = () => {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [formData, setFormData] = useState<Record<string, any>>(() => {
+    const saved = localStorage.getItem("uploadForm");
+    return saved ? JSON.parse(saved) : {};
+  });
 
-export default function UploadStart() {
-  const router = useRouter()
+  useEffect(() => {
+    localStorage.setItem("uploadForm", JSON.stringify(formData));
+  }, [formData]);
 
-  const handleSubmit = (data: {
-    printType: string
-    size: string
-    quantity: string
-    file?: File
-    notes?: string
-  }) => {
-    // Store the form data in localStorage for now
-    // In a real app, you'd probably use a proper state management solution
-    localStorage.setItem('printRequest', JSON.stringify({
-      ...data,
-      file: data.file?.name // We can't store the actual file in localStorage
-    }))
+  const handleChange = (change: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement> | { target: { name: string; value: any } }) => {
+    const { name, value } = 'target' in change ? change.target : change;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
-    // Navigate to the next step (delivery details)
-    router.push('/upload/delivery')
-  }
+  const steps = [
+    { id: "print-details", label: "Print Details" },
+    { id: "delivery-details", label: "Delivery" },
+    { id: "user-info", label: "Your Info" },
+    { id: "review", label: "Review" }
+  ];
+
+  const nextStep = () => {
+    if (currentStep < steps.length - 1) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  const prevStep = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
 
   return (
-    <div className="min-h-screen py-8 sm:py-12 bg-[#F5F5FF]">
-      {/* Logo */}
-      <div className="flex justify-center mb-12">
-        <div className="inline-flex items-center space-x-2 bg-gray-50 rounded-[75px] px-4 sm:px-6 py-4 shadow-sm border border-gray-100">
-          <Image src="/Assets/logo.svg" alt="Printmote logo" width={200} height={73} priority className="w-[180px] sm:w-[250px] h-auto" />
-          <span className="text-xs bg-indigo-900 text-white px-2 py-0.5 rounded">BETA</span>
+    <div className="w-full flex flex-col lg:flex-row h-screen">
+      <aside className="lg:w-[10%] lg:h-full h-fit py-6 flex flex-row lg:flex-col items-start justify-center lg:space-x-0 space-x-2 lg:overflow-hidden">
+        {steps.map((step, index) => (
+          <ProgressIndicatorPill
+            key={step.id}
+            label={step.label}
+            description={step.label}
+            step={index + 1}
+            isActive={index === currentStep}
+            isCompleted={index < currentStep}
+            isLast={index === steps.length - 1}
+          />
+        ))}
+      </aside>
+    <div className="flex flex-col w-full px-8">
+            <div className="flex w-full justify-between items-center mt-8">
+                {steps.map((step, index)=> (
+                    <h1 key={index}>{step.label}</h1>
+                ))}
+                <div className=" gap-4 actions hidden lg:flex">
+            <button
+            onClick={prevStep}
+            disabled={currentStep === 0}
+            className="px-6 py-2 border border-gray-300 rounded-lg disabled:opacity-50"
+            >
+            Back
+            </button>
+        
+            {currentStep < steps.length - 1 ? (
+            <button
+                onClick={nextStep}
+                className="px-6 py-2 bg-[#6150FF] text-white rounded-lg hover:bg-[#5040E6]"
+            >
+                Next
+            </button>
+            ) : null}
         </div>
-      </div>
+            </div>
 
-      <ProgressSteps currentStep={0} steps={UPLOAD_STEPS} />
-      <PrintUploadForm onSubmit={handleSubmit} />
+      <StepFormRenderer
+        currentStep={currentStep}
+        steps={steps}
+        formData={formData}
+        handleChange={handleChange}
+        />
+        <div className=" gap-4 actions lg:hidden flex w-screen fixed bg-[#f5f5ff] bottom-0 left-0 px-4 py-4">
+            <button
+            onClick={prevStep}
+            disabled={currentStep === 0}
+            className="px-6 py-2 border border-gray-300 rounded-lg disabled:opacity-50 w-full"
+            >
+            Back
+            </button>
+        
+            {currentStep < steps.length - 1 ? (
+            <button
+                onClick={nextStep}
+                className="px-6 py-2 bg-[#6150FF] text-white rounded-lg hover:bg-[#5040E6] w-full"
+            >
+                Next
+            </button>
+            ) : null}
+        </div>
+        </div>
     </div>
-  )
-} 
+  );
+};
+
+export default MultiStepForm;

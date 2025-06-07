@@ -87,7 +87,7 @@ export default function PaymentPage() {
       </div>
 
       <ProgressSteps currentStep={3} steps={UPLOAD_STEPS} />
-      <PaymentForm printRequest={printRequest} onSubmit={handlePayment} />
+      {/* <PaymentForm printRequest={printRequest} onSubmit={handlePayment} /> */}
     </div>
   )
 } 
