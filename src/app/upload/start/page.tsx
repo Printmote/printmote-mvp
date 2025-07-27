@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import StepFormRenderer from "../form/multiStepForm";
 import ProgressIndicatorPill from "@/components/ui/ProgressIndicatorPill";
+import Image from "next/image";
 
 const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -39,71 +40,70 @@ const MultiStepForm = () => {
     }
   };
 
+  const progressPercentage = ((currentStep + 1) / steps.length) * 100;
+
   return (
     <div className="w-full flex flex-col lg:flex-row h-screen">
-      <aside className="lg:w-[10%] lg:h-full h-fit py-6 flex flex-row lg:flex-col items-start justify-center lg:space-x-0 space-x-2 lg:overflow-hidden">
-        {steps.map((step, index) => (
-          <ProgressIndicatorPill
-            key={step.id}
-            label={step.label}
-            description={step.label}
-            step={index + 1}
-            isActive={index === currentStep}
-            isCompleted={index < currentStep}
-            isLast={index === steps.length - 1}
-          />
-        ))}
-      </aside>
-    <div className="flex flex-col w-full px-8">
-            <div className="flex w-full justify-between items-center mt-8">
-                {steps.map((step, index)=> (
-                    <h1 key={index}>{step.label}</h1>
-                ))}
-                <div className=" gap-4 actions hidden lg:flex">
+
+      <div className="flex flex-col w-full px-8 py-10">
+            <div className="w-full flex flex-col items-center justify-center">
+            <Image src={'/Assets/logo.svg'} width={200} height={200} alt="image-logo"/>
+            </div>
+       <div className="w-full flex items-center justify-center">
+       <div className="w-[500px] h-2 bg-gray-200 rounded-full overflow-hidden mt-4">
+          <div
+            className="h-full bg-[#6150FF] transition-all duration-300"
+            style={{ width: `${progressPercentage}%` }}
+          >
+          </div>
+       </div>
+        </div>
+        {/* <div className="absolute bottom-4 left-0 flex w-full justify-between items-center mt-8">
+          <div className="gap-4 actions hidden lg:flex">
             <button
-            onClick={prevStep}
-            disabled={currentStep === 0}
-            className="px-6 py-2 border border-gray-300 rounded-lg disabled:opacity-50"
+              onClick={prevStep}
+              disabled={currentStep === 0}
+              className="px-6 py-2 border border-gray-300 rounded-lg disabled:opacity-50"
             >
-            Back
+              Back
             </button>
-        
+
             {currentStep < steps.length - 1 ? (
-            <button
+              <button
                 onClick={nextStep}
                 className="px-6 py-2 bg-[#6150FF] text-white rounded-lg hover:bg-[#5040E6]"
-            >
+              >
                 Next
-            </button>
+              </button>
             ) : null}
-        </div>
-            </div>
+          </div>
+        </div> */}
 
-      <StepFormRenderer
-        currentStep={currentStep}
-        steps={steps}
-        formData={formData}
-        handleChange={handleChange}
+        <StepFormRenderer
+          currentStep={currentStep}
+          steps={steps}
+          formData={formData}
+          handleChange={handleChange}
         />
-        <div className=" gap-4 actions lg:hidden flex w-screen fixed bg-[#f5f5ff] bottom-0 left-0 px-4 py-4">
-            <button
+        <div className="gap-4 actions flex items-center justify-center w-full bg-[#f5f5ff] bottom-0 px-4 py-4 pb-20">
+          <button
             onClick={prevStep}
             disabled={currentStep === 0}
-            className="px-6 py-2 border border-gray-300 rounded-lg disabled:opacity-50 w-full"
-            >
+            className={`px-6 py-4 border rounded-full border-gray-300 disabled:opacity-50 w-full font-semibold lg:max-w-[30vw] ${currentStep === 0 ? "hidden" : ""}`}
+          >
             Back
-            </button>
-        
-            {currentStep < steps.length - 1 ? (
+          </button>
+
+          {currentStep < steps.length - 1 ? (
             <button
-                onClick={nextStep}
-                className="px-6 py-2 bg-[#6150FF] text-white rounded-lg hover:bg-[#5040E6] w-full"
+              onClick={nextStep}
+              className="px-6 py-4 rounded-full bg-[#6150FF] text-white hover:bg-[#5040E6] w-full lg:max-w-[30vw] font-semibold"
             >
-                Next
+              Continue
             </button>
-            ) : null}
+          ) : null}
         </div>
-        </div>
+      </div>
     </div>
   );
 };

@@ -9,7 +9,8 @@ interface UserInfoProps {
 
 const UserInfoStep: React.FC<UserInfoProps> = ({ formData, handleChange }) => {
   return (
-    <div className="mx-auto p-6 w-full lg:w-[50%]">
+    <div className="mx-auto p-6 w-full lg:px-[200px]">
+      <h1 className="text-[48px] text-left py-8 text-[#05054E] font-bold leading-[1]">Let&apos;s get to Know You.</h1>
       <div className="space-y-4">
         {/* Full Name */}
         <TextInput

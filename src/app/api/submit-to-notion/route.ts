@@ -8,6 +8,11 @@ export async function POST(request: Request) {
   try {
     const { formData } = await request.json()
 
+    // Log environment variables and formData for debugging
+    console.log('NOTION_API_KEY:', process.env.NOTION_API_KEY)
+    console.log('NOTION_PRINT_REQUESTS_DB_ID:', process.env.NOTION_PRINT_REQUESTS_DB_ID)
+    console.log('Received formData:', formData)
+
     // Validate required fields
     if (!formData?.fullName || !formData?.email) {
       return NextResponse.json(

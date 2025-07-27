@@ -69,9 +69,9 @@ const SizeDropdown: React.FC<SizeDropdownProps> = ({ value, onChange, printType 
   if (!printType || availableSizes.length === 0) {
     return (
       <div className="w-full">
-        <label className="block mb-1 font-medium text-sm text-[#151515]">Size</label>
+        <label className="block mb-1 text-sm text-[#868686]">Size</label>
         <div className="w-full px-4 py-3 bg-gray-100 text-gray-400 rounded-xl border border-gray-200 flex items-center justify-between">
-          <span>Select print type first</span>
+          <span className="text-[#868686]">Select print type first</span>
         </div>
       </div>
     );
@@ -79,14 +79,16 @@ const SizeDropdown: React.FC<SizeDropdownProps> = ({ value, onChange, printType 
 
   return (
     <div className="w-full relative dropdown-container">
-      <label className="block mb-1 font-medium text-sm text-[#151515]">Size</label>
 
       <button
         type="button"
         className="w-full px-4 py-3 bg-gray-50 text-[#151515] rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6150FF] focus:border-transparent flex items-center justify-between"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span>{value || "Select a size"}</span>
+      <div className="flex flex-col justify-start items-start">
+      <label className="block mb-1 font-medium text-sm text-[#151515]">Size</label>
+      <span className="text-[30px] text-[#05054E]">{value || "Select a size"}</span>
+      </div>
         <HiOutlineChevronDown className="text-lg" />
       </button>
 

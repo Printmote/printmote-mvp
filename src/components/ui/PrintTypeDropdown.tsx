@@ -45,19 +45,21 @@ const PrintTypeDropdown: React.FC<PrintTypeDropdownProps> = ({ value, onChange }
 
   return (
     <div className="w-full relative">
-      <label className="block mb-1 font-medium text-sm text-[#151515]">Type of Printing</label>
 
       <button
         type="button"
-        className="w-full px-4 py-3 bg-gray-50 text-[#151515] rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6150FF] focus:border-transparent flex items-center justify-between"
+        className="w-full px-4 pt-2 pb-4 bg-gray-50 text-[#151515] rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#6150FF] focus:border-transparent flex items-center justify-between"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span>{value || "Select a type"}</span>
+      <div className="flex flex-col justify-start items-start">
+      <label className="block mb-1 text-sm text-[#868686]">Type of Printing</label>
+      <span className="text-[30px] text-[#05054E]">{value || "Select a type"}</span>
+      </div>
         <HiOutlineChevronDown className="text-lg" />
       </button>
 
       {isOpen && !isMobile && (
-        <div className="absolute mt-2 grid grid-cols-3 gap-2 bg-white border border-gray-200 rounded-xl shadow-lg p-4 w-full z-50">
+        <div className="absolute mt-2 grid grid-cols-4 gap-2 bg-white border border-gray-200 rounded-xl shadow-lg p-4 w-full z-50">
           {printOptions.map((option) => (
             <button
               key={option.value}

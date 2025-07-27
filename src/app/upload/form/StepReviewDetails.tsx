@@ -100,9 +100,14 @@ const ReviewSubmitStep: React.FC<ReviewSubmitProps> = ({ formData }) => {
     return baseCost.toFixed(2);
   };
 
+  const handleEditStep = (step: string) => {
+    // Logic to navigate to the specific step
+    console.log(`Navigating to step: ${step}`);
+  };
+
   if (submitSuccess) {
     return (
-      <div className="mx-auto p-6 w-full">
+      <div className="mx-auto p-6 w-full ">
         <div className="text-center">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <HiCheck className="w-8 h-8 text-green-600" />
@@ -135,127 +140,147 @@ const ReviewSubmitStep: React.FC<ReviewSubmitProps> = ({ formData }) => {
         </p>
       </div>
 
-      <div className="space-y-6">
-        {/* Personal Information */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Personal Information Card */}
         <div className="bg-white border border-gray-200 rounded-lg p-6">
-          <h3 className="text-lg font-medium text-[#151515] mb-4">👤 Personal Information</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-medium text-[#151515]">Personal Information</h3>
+            <button
+              onClick={() => handleEditStep("Personal Information")}
+              className="text-xs bg-[#6150FF] text-white px-3 py-1 rounded-full hover:bg-[#5040E6] transition-colors"
+            >
+              Edit
+            </button>
+          </div>
+          <ul className="space-y-4">
+            <li>
               <p className="text-sm text-gray-600">Full Name</p>
               <p className="font-medium text-[#151515]">{formData.fullName || "Not provided"}</p>
               {validationErrors.fullName && (
                 <p className="text-red-500 text-sm">{validationErrors.fullName}</p>
               )}
-            </div>
-            <div>
+            </li>
+            <li>
               <p className="text-sm text-gray-600">Email</p>
               <p className="font-medium text-[#151515]">{formData.email || "Not provided"}</p>
               {validationErrors.email && (
                 <p className="text-red-500 text-sm">{validationErrors.email}</p>
               )}
-            </div>
-            <div>
+            </li>
+            <li>
               <p className="text-sm text-gray-600">Phone</p>
               <p className="font-medium text-[#151515]">{formData.phoneNumber || "Not provided"}</p>
               {validationErrors.phoneNumber && (
                 <p className="text-red-500 text-sm">{validationErrors.phoneNumber}</p>
               )}
-            </div>
-          </div>
+            </li>
+          </ul>
         </div>
 
-        {/* Order Details */}
+        {/* Print Details Card */}
         <div className="bg-white border border-gray-200 rounded-lg p-6">
-          <h3 className="text-lg font-medium text-[#151515] mb-4">📄 Order Details</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div>
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-medium text-[#151515]">Print Details</h3>
+            <button
+              onClick={() => handleEditStep("Print Details")}
+              className="text-xs bg-[#6150FF] text-white px-3 py-1 rounded-full hover:bg-[#5040E6] transition-colors"
+            >
+              Edit
+            </button>
+          </div>
+          <ul className="space-y-4">
+            <li>
               <p className="text-sm text-gray-600">Print Type</p>
               <p className="font-medium text-[#151515]">{formData.printType || "Not specified"}</p>
               {validationErrors.printType && (
                 <p className="text-red-500 text-sm">{validationErrors.printType}</p>
               )}
-            </div>
-            <div>
+            </li>
+            <li>
               <p className="text-sm text-gray-600">Quantity</p>
               <p className="font-medium text-[#151515]">{formData.quantity || "Not specified"}</p>
-            </div>
+            </li>
             {formData.designFile && (
-              <div className="md:col-span-3">
+              <li>
                 <p className="text-sm text-gray-600">Design File</p>
                 <p className="font-medium text-[#151515]">{formData.designFile.name}</p>
-              </div>
+              </li>
             )}
-          </div>
+          </ul>
         </div>
 
-        {/* Delivery Information */}
+        {/* Delivery Information Card */}
         <div className="bg-white border border-gray-200 rounded-lg p-6">
-          <h3 className="text-lg font-medium text-[#151515] mb-4">🚚 Delivery Information</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-medium text-[#151515]">Delivery Information</h3>
+            <button
+              onClick={() => handleEditStep("Delivery Information")}
+              className="text-xs bg-[#6150FF] text-white px-3 py-1 rounded-full hover:bg-[#5040E6] transition-colors"
+            >
+              Edit
+            </button>
+          </div>
+          <ul className="space-y-4">
+            <li>
               <p className="text-sm text-gray-600">Delivery Method</p>
               <p className="font-medium text-[#151515]">{formData.deliveryType || "Not specified"}</p>
               {validationErrors.deliveryType && (
                 <p className="text-red-500 text-sm">{validationErrors.deliveryType}</p>
               )}
-            </div>
-            <div>
+            </li>
+            <li>
               <p className="text-sm text-gray-600">Delivery Date</p>
               <p className="font-medium text-[#151515]">{formatDate(formData.deliveryDate)}</p>
-            </div>
-            <div className="md:col-span-2">
+            </li>
+            <li>
               <p className="text-sm text-gray-600">Delivery Address</p>
               <p className="font-medium text-[#151515]">{formData.deliveryDestination || "Not specified"}</p>
               {validationErrors.deliveryDestination && (
                 <p className="text-red-500 text-sm">{validationErrors.deliveryDestination}</p>
               )}
-            </div>
-          </div>
+            </li>
+          </ul>
         </div>
 
-        {/* Order Summary */}
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-          <h3 className="text-lg font-medium text-[#151515] mb-4">Order Summary</h3>
-          <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <span className="text-gray-600">Print Cost</span>
-              <span className="font-medium">GHS {calculateEstimatedCost()}</span>
-            </div>
-            <div className="pt-3 border-t border-gray-300">
-              <div className="flex justify-between items-center text-lg">
-                <span className="font-medium text-[#151515]">Total</span>
-                <span className="font-semibold text-[#6150FF]">GHS {calculateEstimatedCost()}</span>
-              </div>
-            </div>
+        {/* Pricing Card */}
+        <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <div className="flex justify-start items-center mb-4">
+            <h3 className="text-lg font-medium text-[#151515]">Pricing</h3>
           </div>
+          <ul className="space-y-4">
+            <li>
+              <p className="text-sm text-gray-600">Price</p>
+              <p className="font-medium text-[#151515]">The price will be invoiced to you.</p>
+            </li>
+          </ul>
         </div>
+      </div>
 
-        {submitError && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
-            <HiExclamationCircle className="w-5 h-5 text-red-600" />
-            <p className="text-red-800">{submitError}</p>
-          </div>
-        )}
-
-        <div className="flex justify-center pt-4">
-          <button
-            onClick={handleSubmit}
-            disabled={isSubmitting}
-            className="bg-[#6150FF] text-white px-8 py-4 rounded-lg hover:bg-[#5040E6] disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center gap-2 text-lg font-medium"
-          >
-            {isSubmitting ? (
-              <>
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                Submitting...
-              </>
-            ) : (
-              <>
-                <HiCheck className="w-5 h-5" />
-                Submit Order
-              </>
-            )}
-          </button>
+      {submitError && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
+          <HiExclamationCircle className="w-5 h-5 text-red-600" />
+          <p className="text-red-800">{submitError}</p>
         </div>
+      )}
+
+      <div className="flex justify-center pt-4">
+        <button
+          onClick={handleSubmit}
+          disabled={isSubmitting}
+          className="bg-[#6150FF] text-white px-8 py-4 rounded-lg hover:bg-[#5040E6] disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center gap-2 text-lg font-medium"
+        >
+          {isSubmitting ? (
+            <>
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              Submitting...
+            </>
+          ) : (
+            <>
+              <HiCheck className="w-5 h-5" />
+              Submit Order
+            </>
+          )}
+        </button>
       </div>
     </div>
   );

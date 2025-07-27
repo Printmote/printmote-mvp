@@ -44,16 +44,9 @@ const PrintDetailsStep: React.FC<PrintDetailsProps> = ({ formData, handleChange 
 
   return (
     <div className="mx-auto w-full p-6 h-fit">
-      <div className="flex flex-col lg:flex-row lg:gap-4">
-        <div className="w-full">
-          <FileUpload
-            label="Upload Design"
-            name="designFile"
-            file={formData.designFile}
-            onChange={handleFileChange}
-          />
-        </div>
-        <div className="flex flex-col gap-4 w-full">
+      <div className="flex flex-col lg:gap-4 lg:px-[200px]">
+          <h1 className="text-[48px] text-left py-8 text-[#05054E] font-bold leading-[1]">What will you like to print today?</h1>
+        <div className="grid grid-cols-2 gap-4 w-full">
           <PrintTypeDropdown
             value={formData.printType}
             onChange={handlePrintTypeChange}
@@ -64,8 +57,9 @@ const PrintDetailsStep: React.FC<PrintDetailsProps> = ({ formData, handleChange 
             onChange={handleSizeChange}
             printType={formData.printType || ""}
           />
-
-          <TextInput
+        </div>
+        
+        <TextInput
             label="Quantity"
             name="quantity"
             type="number"
@@ -73,6 +67,15 @@ const PrintDetailsStep: React.FC<PrintDetailsProps> = ({ formData, handleChange 
             onChange={handleChange}
             placeholder="Enter quantity"
           />
+
+<div className="w-full">
+          <FileUpload
+            label="Upload Design"
+            name="designFile"
+            file={formData.designFile}
+            onChange={handleFileChange}
+          />
+        </div>
 
           <TextInput
             label="Additional Notes"
@@ -82,7 +85,6 @@ const PrintDetailsStep: React.FC<PrintDetailsProps> = ({ formData, handleChange 
             placeholder="e.g. Any design instructions or preferences"
             textarea
           />
-        </div>
       </div>
     </div>
   );

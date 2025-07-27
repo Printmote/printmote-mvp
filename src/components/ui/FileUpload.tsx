@@ -53,24 +53,24 @@ const FileUpload: React.FC<FileUploadProps> = ({
   }, [file]);
 
   return (
-    <div className="w-full h-full">
-      <label className="block mb-1 font-medium text-[#151515]">{label}</label>
+    <div className="w-full h-full h-[300px]">
+      {/* <label className="block mb-1 font-medium text-[#151515]">{label}</label> */}
       <label
         onDrop={handleDrop}
         onDragOver={(e) => e.preventDefault()}
         htmlFor={name}
-        className="flex flex-col h-full w-full items-center justify-center px-4 py-3 bg-gray-50 text-[#151515] rounded-xl border border-gray-200 cursor-pointer hover:border-[#6150FF] focus-within:ring-2 focus-within:ring-[#6150FF] overflow-hidden"
+        className="flex flex-col h-full w-full items-center justify-center px-4 py-3 bg-gray-50 text-[#151515] rounded-xl border border-gray-400 border-dashed cursor-pointer hover:border-[#6150FF] focus-within:ring-2 focus-within:ring-[#6150FF] overflow-hidden"
       >
         {previewUrl ? (
           <img
             src={previewUrl}
             alt="Uploaded Preview"
-            className="object-contain max-h-[200px] w-auto"
+            className="object-contain h-full w-auto"
           />
         ) : (
-          <div className="flex flex-col gap-2 items-center justify-center text-gray-500">
+          <div className="flex flex-col gap-2 items-center justify-center text-gray-500 text-[#c3c3c3]">
             <PiImage size={60} />
-            <p className="text-sm">Click to upload or drag and drop...</p>
+            <p className="text-[20px]">Click to upload or drag and drop...</p>
           </div>
         )}
 
