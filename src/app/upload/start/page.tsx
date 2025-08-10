@@ -1,8 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import StepFormRenderer from "../form/multiStepForm";
-import ProgressIndicatorPill from "@/components/ui/ProgressIndicatorPill";
 import Image from "next/image";
 
 const MultiStepForm = () => {
