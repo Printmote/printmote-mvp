@@ -7,13 +7,20 @@ import Image from "next/image";
 
 const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState<Record<string, any>>(() => {
-    const saved = localStorage.getItem("uploadForm");
-    return saved ? JSON.parse(saved) : {};
-  });
+  const [formData, setFormData] = useState<Record<string, any>>({});
+
+  // Load formData from localStorage on client only
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("uploadForm");
+      if (saved) setFormData(JSON.parse(saved));
+    }
+  }, []);
 
   useEffect(() => {
-    localStorage.setItem("uploadForm", JSON.stringify(formData));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("uploadForm", JSON.stringify(formData));
+    }
   }, [formData]);
 
   const handleChange = (change: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement> | { target: { name: string; value: any } }) => {
