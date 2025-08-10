@@ -52,4 +52,6 @@ const MultiStepForm = () => {
       <h1 className="text-4xl font-bold text-[#05054E]">Upload Flow Coming Soon</h1>
     </div>
   )
-} 
+}
+
+export default MultiStepForm;
