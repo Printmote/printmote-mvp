@@ -28,7 +28,7 @@ export default function Home() {
             href="/about"
             className="whitespace-nowrap inline-block bg-white text-[#050038] text-sm sm:text-base font-medium px-6 py-2 rounded-lg hover:bg-gray-100 transition"
           >
-            Learn why we launched Printmote
+            Learn why we launched Printmote.
           </Link>
         </div>
       </div>
