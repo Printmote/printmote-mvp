@@ -37,18 +37,28 @@ const ReviewSubmitStep: React.FC<ReviewSubmitProps> = ({ formData }) => {
   setIsSubmitting(true);
   setSubmitError(null);
 
+  // Prepare Notion columns
+  const notionPayload = {
+    name: formData.fullName,
+    email: formData.email,
+    printType: formData.printType,
+    size: formData.size,
+    quantity: formData.quantity,
+    deliveryType: formData.deliveryType,
+    dateSubmitted: formData.deliveryDate,
+    phone: formData.phoneNumber,
+    totalCost: calculateEstimatedCost(),
+    status: formData.status || 'pending',
+    uploadedFile: formData.designFile || null
+  };
+
   try {
     const response = await fetch('/api/submit-to-notion', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        formData: {
-          ...formData,
-          totalCost: calculateEstimatedCost()
-        }
-      })
+      body: JSON.stringify(notionPayload)
     });
 
     const data = await response.json();
