@@ -6,19 +6,33 @@ const notion = new Client({ auth: process.env.NOTION_API_KEY })
 
 export async function POST(request: Request) {
   try {
-    const { formData } = await request.json()
-
-    // Log environment variables and formData for debugging
-    console.log('NOTION_API_KEY:', process.env.NOTION_API_KEY)
-    console.log('NOTION_PRINT_REQUESTS_DB_ID:', process.env.NOTION_PRINT_REQUESTS_DB_ID)
-    console.log('Received formData:', formData)
-
+    const { formData } = await request.json();
     // Validate required fields
     if (!formData?.fullName || !formData?.email) {
       return NextResponse.json(
         { error: 'Full name and email are required' },
         { status: 400 }
-      )
+      );
+    }
+
+    // Upload file to Supabase Storage if present
+    let fileUrl = null;
+    if (formData.designFile) {
+      const { name, type, base64 } = formData.designFile;
+      const { createClient } = await import('@/lib/supabase/server');
+      const supabase = createClient();
+      const buffer = Buffer.from(base64, 'base64');
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('requestFiles')
+        .upload(`${Date.now()}_${name}`, buffer, {
+          contentType: type,
+          upsert: false,
+        });
+      if (uploadError) {
+        return NextResponse.json({ error: uploadError.message }, { status: 400 });
+      }
+      // Use public URL for Notion, not signed URL
+      fileUrl = supabase.storage.from('requestFiles').getPublicUrl(uploadData.path).data.publicUrl;
     }
 
     // Create new row in "print requests" database
@@ -64,34 +78,43 @@ export async function POST(request: Request) {
         },
         'Status': {
           status: {
-            // Use one of these exact values from your Notion database
-            name: 'Not started' // or 'Pending', 'In Progress', etc.
+            name: 'Not started'
           }
         },
         'Date Submitted': {
           date: {
             start: new Date().toISOString()
           }
-        }
+        },
+        'uploadedFiles': fileUrl
+          ? {
+              files: [
+                {
+                  name: formData.designFile?.name || 'Uploaded File',
+                  type: 'external',
+                  external: { url: fileUrl },
+                },
+              ],
+            }
+          : { files: [] },
       }
-    })
+    });
 
-    // Type-safe response handling
     if ('url' in response) {
       return NextResponse.json({
         success: true,
         notionPageUrl: response.url,
         pageId: response.id
-      })
+      });
     }
 
-    throw new Error('Unexpected response from Notion API')
+    throw new Error('Unexpected response from Notion API');
 
   } catch (error) {
-    console.error('Notion API error:', error)
+    console.error('Notion API error:', error);
     return NextResponse.json(
       { error: 'Failed to create print request' },
       { status: 500 }
-    )
+    );
   }
 }

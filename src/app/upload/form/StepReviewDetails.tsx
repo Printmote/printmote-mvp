@@ -37,19 +37,40 @@ const ReviewSubmitStep: React.FC<ReviewSubmitProps> = ({ formData }) => {
   setIsSubmitting(true);
   setSubmitError(null);
 
-  // Prepare Notion columns
+  // Prepare Notion payload
+  let designFilePayload = null;
+  if (formData.designFile) {
+    const file = formData.designFile;
+    const toBase64 = (file: File) => new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const result = reader.result as string;
+        const base64 = result.split(',')[1];
+        resolve(base64);
+      };
+      reader.onerror = error => reject(error);
+    });
+    try {
+      const base64 = await toBase64(file);
+      designFilePayload = {
+        name: file.name,
+        type: file.type,
+        base64,
+      };
+    } catch (err) {
+      setSubmitError('Failed to process file upload.');
+      setIsSubmitting(false);
+      return;
+    }
+  }
+
   const notionPayload = {
-    name: formData.fullName,
-    email: formData.email,
-    printType: formData.printType,
-    size: formData.size,
-    quantity: formData.quantity,
-    deliveryType: formData.deliveryType,
-    dateSubmitted: formData.deliveryDate,
-    phone: formData.phoneNumber,
-    totalCost: calculateEstimatedCost(),
-    status: formData.status || 'pending',
-    uploadedFile: formData.designFile || null
+    formData: {
+      ...formData,
+      totalCost: calculateEstimatedCost(),
+      designFile: designFilePayload,
+    }
   };
 
   try {
@@ -69,10 +90,6 @@ const ReviewSubmitStep: React.FC<ReviewSubmitProps> = ({ formData }) => {
 
     setSubmitSuccess(true);
     localStorage.removeItem("uploadForm");
-
-    // Optional: Show Notion URL
-    console.log('Notion page created:', data.notionUrl);
-
   } catch (error) {
     console.error('Submission error:', error);
     setSubmitError(
